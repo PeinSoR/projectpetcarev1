@@ -1,13 +1,181 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Petcaref</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PetCare+ | Bienvenido</title>
+  <link rel="icon" type="image/png" href="imgs/huellitas.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    :root {
+      --petcare-blue: #1d75bc;
+      --petcare-accent: #45b6fe;
+      --petcare-dark: #1b4f72;
+    }
+    html, body {
+      height: 100%; margin: 0; padding: 0;
+      display: flex; flex-direction: column;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background-color: transparent;
+    }
+    .background-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url('imgs/fondo_huellitas.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      opacity: 0.3;
+      z-index: -1;
+    }
+    .navbar {
+      background: linear-gradient(90deg, var(--petcare-blue), var(--petcare-accent));
+    }
+    .btn-lg {
+      padding: 0.8rem 2rem;
+      font-size: 1.25rem;
+    }
+    .hero {
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+    }
+    footer {
+      background-color: var(--petcare-dark);
+      color: white;
+      margin-top: auto;
+    }
+    footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    footer a:hover {
+      color: var(--petcare-accent);
+    }
+    .counter {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+<div class="background-overlay"></div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top py-2" style="background: linear-gradient(90deg, #1d75bc, #45b6fe); z-index: 1030;">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="/petcare/Login/dashboard.php">
+      <i class="bi bi-paw-fill me-2 fs-3"></i> 🐾 PetCare+
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<main class="container text-center hero">
+  <h1 class="display-4 fw-bold mb-4" data-aos="fade-up">Bienvenido a PetCare+</h1>
+  <p class="lead mb-5" data-aos="fade-up" data-aos-delay="200">
+    La plataforma integral para el cuidado, gestión, adopción y conexión con amantes de los animales en tu comunidad. 🐶🐱
+  </p>
+  <div class="d-grid gap-3 d-md-flex justify-content-center" data-aos="zoom-in" data-aos-delay="400">
+    <a href="Login/login.html" class="btn btn-success btn-lg shadow"><i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión</a>
+    <a href="Login/registro.html" class="btn btn-primary btn-lg shadow"><i class="bi bi-person-plus me-2"></i>Registrarse</a>
+  </div>
+
+  <!-- Beneficios -->
+  <div class="row text-center mt-5">
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="600">
+      <i class="bi bi-shield-plus fs-1 text-primary"></i>
+      <p class="fw-bold mt-2">Registro de Mascotas</p>
+    </div>
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="700">
+      <i class="bi bi-house-heart fs-1 text-success"></i>
+      <p class="fw-bold mt-2">Adopciones</p>
+    </div>
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="800">
+      <i class="bi bi-wallet fs-1 text-warning"></i>
+      <p class="fw-bold mt-2">Finanzas</p>
+    </div>
+    <div class="col-md-3" data-aos="fade-up" data-aos-delay="900">
+      <i class="bi bi-people-fill fs-1 text-danger"></i>
+      <p class="fw-bold mt-2">Red Vecinal</p>
+    </div>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="row mt-5 text-center">
+    <div class="col-md-4"><h2 class="counter text-success" data-count="350">0</h2><p>Usuarios activos</p></div>
+    <div class="col-md-4"><h2 class="counter text-primary" data-count="120">0</h2><p>Mascotas registradas</p></div>
+    <div class="col-md-4"><h2 class="counter text-warning" data-count="60">0</h2><p>Adopciones exitosas</p></div>
+  </div>
+
+  <!-- Testimonios mejorados -->
+  <div id="testimoniosCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-aos="fade-up" data-aos-delay="1000">
+    <div class="carousel-inner text-center">
+      <div class="carousel-item active">
+        <blockquote class="blockquote">
+          <p>“Gracias a PetCare+ encontré una familia para mi perrita y me siento más conectada con mi comunidad.”</p>
+          <footer class="blockquote-footer">Sofía Gutiérrez, usuaria</footer>
+        </blockquote>
+      </div>
+      <div class="carousel-item">
+        <blockquote class="blockquote">
+          <p>“Nunca había tenido tan organizado el cuidado de mis mascotas. Es una herramienta esencial.”</p>
+          <footer class="blockquote-footer">Carlos Jiménez, adoptante</footer>
+        </blockquote>
+      </div>
+      <div class="carousel-item">
+        <blockquote class="blockquote">
+          <p>“Publicar alertas en mi colonia me ha ayudado a reencontrarme con mi gato perdido.”</p>
+          <footer class="blockquote-footer">Laura Pérez, vecina activa</footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center py-4 shadow-lg">
+  <div class="container">
+    <p class="mb-1">© 2025 PetCare+ | Todos los derechos reservados.</p>
+    <div>
+      <a href="#">Aviso Legal</a> |
+      <a href="#">Política de Privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll('.counter');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-count'));
+          let count = 0;
+          const speed = 15;
+          const update = () => {
+            count++;
+            el.textContent = `+${count}`;
+            if (count < target) setTimeout(update, speed);
+          };
+          update();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 1 });
+    counters.forEach(counter => observer.observe(counter));
+  });
+</script>
 </body>
 </html>
