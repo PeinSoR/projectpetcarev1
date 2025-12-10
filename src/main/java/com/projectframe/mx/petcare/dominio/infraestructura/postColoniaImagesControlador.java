@@ -1,10 +1,13 @@
 package com.projectframe.mx.petcare.dominio.infraestructura;
 
 import com.projectframe.mx.petcare.dominio.aplicacion.postColoniaImagesServicio;
+import com.projectframe.mx.petcare.dominio.aplicacion.usuariosServicio;
 import com.projectframe.mx.petcare.dominio.entidades.postColoniaImages;
+import com.projectframe.mx.petcare.dominio.entidades.usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,6 +16,9 @@ import java.util.List;
 public class postColoniaImagesControlador {
     @Autowired
     private postColoniaImagesServicio postColoniaImagesServicio;
+
+    @Autowired
+    private usuariosServicio usuariosServicio;
 
     @GetMapping("/allpost-colonia-images")
     @ResponseStatus(HttpStatus.OK)
@@ -29,6 +35,10 @@ public class postColoniaImagesControlador {
     @PostMapping("/create-post-colonia-images")
     @ResponseStatus(HttpStatus.OK)
     public postColoniaImages guardarPostColoniaImages(@RequestBody postColoniaImages postColoniaImages) {
+        usuarios user = usuariosServicio.obtenerUsuarioPorId(postColoniaImages.getUsuarioId());
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
+        }
         return postColoniaImagesServicio.guardarPostColoniaImages(postColoniaImages);
     }
 

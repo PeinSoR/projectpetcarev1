@@ -1,10 +1,13 @@
 package com.projectframe.mx.petcare.dominio.infraestructura;
 
 import com.projectframe.mx.petcare.dominio.aplicacion.commentsColoniaServicio;
+import com.projectframe.mx.petcare.dominio.aplicacion.usuariosServicio;
 import com.projectframe.mx.petcare.dominio.entidades.commentsColonia;
+import com.projectframe.mx.petcare.dominio.entidades.usuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,6 +16,9 @@ import java.util.List;
 public class commentsColoniaControlador {
     @Autowired
     private commentsColoniaServicio commentsColoniaServicio;
+
+    @Autowired
+    private usuariosServicio usuariosServicio;
 
     @GetMapping("allcomments-colonia")
     @ResponseStatus(HttpStatus.OK)
@@ -29,6 +35,10 @@ public class commentsColoniaControlador {
     @PostMapping("/create-comment-colonia")
     @ResponseStatus(HttpStatus.OK)
     public commentsColonia guardarCommentColonia(@RequestBody commentsColonia commentColonia) {
+        usuarios user = usuariosServicio.obtenerUsuarioPorId(commentColonia.getUserId());
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
+        }
         return commentsColoniaServicio.guardarCommentsColonia(commentColonia);
     }
 

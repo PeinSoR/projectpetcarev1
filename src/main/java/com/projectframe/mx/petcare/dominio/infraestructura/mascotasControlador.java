@@ -10,6 +10,7 @@ import com.projectframe.mx.petcare.dominio.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,9 +37,12 @@ public class mascotasControlador {
     @PostMapping("/create-mascota")
     @ResponseStatus(HttpStatus.OK)
     public mascotas guardarMascotas(@RequestBody mascotas mascotas) {
+        usuarios user = usuariosServicio.obtenerUsuarioPorId(mascotas.getUsuarioId());
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
+        }
 
         String texto = "Se ha registrado tu mascota exitosamente en nuestra base de datos";
-        usuarios user = usuariosServicio.obtenerUsuarioPorId(mascotas.getUsuarioId());
         String to = user.getEmail();
         String subject = "Registro de Mascota en Petcare";
 
