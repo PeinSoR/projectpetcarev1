@@ -32,7 +32,7 @@ public class commentsColoniaControlador {
         return commentsColoniaServicio.guardarCommentsColonia(commentColonia);
     }
 
-    @PutMapping("/update-comment-colonia")
+    @PutMapping("/update-comment-colonia/{id}")
     @ResponseStatus(HttpStatus.OK)
     public commentsColonia actualizarCommentColonia(@RequestBody commentsColonia commentColonia, @PathVariable Long id) {
         commentsColonia commCol = commentsColoniaServicio.obtenerCommentsColoniaPorId(id);
@@ -43,7 +43,7 @@ public class commentsColoniaControlador {
         return commentsColoniaServicio.guardarCommentsColonia(commCol);
     }
 
-    @DeleteMapping("/delete-comment-colonia")
+    @DeleteMapping("/delete-comment-colonia/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void eliminarCommentColonia(@PathVariable long id) {
         commentsColoniaServicio.eliminarCommentsColonia(id);
