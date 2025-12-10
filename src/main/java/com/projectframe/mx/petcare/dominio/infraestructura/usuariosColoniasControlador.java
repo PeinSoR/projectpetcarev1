@@ -1,11 +1,14 @@
 package com.projectframe.mx.petcare.dominio.infraestructura;
 
+import com.projectframe.mx.petcare.dominio.aplicacion.coloniasServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.usuariosColoniasServicio;
+import com.projectframe.mx.petcare.dominio.entidades.colonias;
 import com.projectframe.mx.petcare.dominio.entidades.usuariosColonias;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -14,6 +17,9 @@ import java.util.List;
 public class usuariosColoniasControlador {
     @Autowired
     private usuariosColoniasServicio  usuariosColoniasServicio;
+
+    @Autowired
+    private coloniasServicio coloniasServicio;
 
     @GetMapping("/allusuarios-colonias")
     @ResponseStatus(HttpStatus.OK)
@@ -30,6 +36,10 @@ public class usuariosColoniasControlador {
     @PostMapping("/create-usuarios-colonias")
     @ResponseStatus(HttpStatus.OK)
     public usuariosColonias guardarUsuariosColonias(@RequestBody usuariosColonias usuariosColonias){
+        colonias col = coloniasServicio.obtenerColoniaPorId(usuariosColonias.getColoniaId());
+        if (col == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La colonia no existe");
+        }
         return usuariosColoniasServicio.guardarUsuariosColonias(usuariosColonias);
     }
 
