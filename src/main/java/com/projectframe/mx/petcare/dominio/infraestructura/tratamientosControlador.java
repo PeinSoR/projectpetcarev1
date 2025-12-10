@@ -40,7 +40,7 @@ public class tratamientosControlador {
         return tratamientosServicio.guardarTratamientos(tratamiento);
     }
 
-    @PutMapping("/update-tratamiento")
+    @PutMapping("/update-tratamiento/{id}")
     @ResponseStatus(HttpStatus.OK)
     public tratamientos actualizarTratamiento(@RequestBody tratamientos tratamiento, @PathVariable Long id){
         tratamientos tr =  tratamientosServicio.obtenerTratamientosPorId(id);
