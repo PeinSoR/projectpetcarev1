@@ -1,6 +1,8 @@
 package com.projectframe.mx.petcare.dominio.infraestructura;
 
+import com.projectframe.mx.petcare.dominio.aplicacion.coloniasServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.usuariosServicio;
+import com.projectframe.mx.petcare.dominio.entidades.colonias;
 import com.projectframe.mx.petcare.dominio.entidades.postsColonia;
 import com.projectframe.mx.petcare.dominio.aplicacion.postsColoniaServicio;
 import com.projectframe.mx.petcare.dominio.entidades.usuarios;
@@ -19,6 +21,8 @@ public class postsColoniaControlador {
 
     @Autowired
     private usuariosServicio usuariosServicio;
+    @Autowired
+    private coloniasServicio coloniasServicio;
 
     @GetMapping("/allposts-colonia")
     @ResponseStatus(HttpStatus.OK)
@@ -38,6 +42,10 @@ public class postsColoniaControlador {
         usuarios user = usuariosServicio.obtenerUsuarioPorId(postsColonia.getUsuarioId());
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
+        }
+        colonias col = coloniasServicio.obtenerColoniaPorId(postsColonia.getColoniaId());
+        if (col == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La colonia no existe");
         }
         return postsColoniaServicio.guardarPostsColonia(postsColonia);
     }
