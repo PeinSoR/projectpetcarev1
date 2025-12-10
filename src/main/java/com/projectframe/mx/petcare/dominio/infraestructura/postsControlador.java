@@ -33,7 +33,7 @@ public class postsControlador {
         return postsServicio.guardarPosts(posts);
     }
 
-    @PutMapping("/update-post")
+    @PutMapping("/update-post/{id}")
     @ResponseStatus(HttpStatus.OK)
     public posts actualizarPosts(@RequestBody posts posts, @PathVariable Long id) {
         posts po = postsServicio.obtenerPostsPorId(id);
@@ -46,7 +46,7 @@ public class postsControlador {
         return postsServicio.guardarPosts(po);
     }
 
-    @DeleteMapping("/delete-post")
+    @DeleteMapping("/delete-post/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePosts(@PathVariable Long id) {
         postsServicio.eliminarPosts(id);

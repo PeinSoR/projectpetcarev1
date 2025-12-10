@@ -30,7 +30,7 @@ public class postImagesControlador {
         return postImagesServicio.guardarPostImages(postImages);
     }
 
-    @PutMapping("/update-postimage")
+    @PutMapping("/update-postimage/{id}")
     @ResponseStatus(HttpStatus.OK)
     public postImages updatePostImage(@RequestBody postImages postImages, @PathVariable Long id){
         postImages pimg = postImagesServicio.obtenerPostImagesPorId(id);
@@ -41,7 +41,7 @@ public class postImagesControlador {
         return postImagesServicio.guardarPostImages(pimg);
     }
 
-    @DeleteMapping("/delete-postimage")
+    @DeleteMapping("/delete-postimage/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deletePostImage(@PathVariable Long id){
         postImagesServicio.eliminarPostImagesPorId(id);

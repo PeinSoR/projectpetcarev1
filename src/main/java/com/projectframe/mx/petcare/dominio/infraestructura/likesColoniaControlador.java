@@ -32,7 +32,7 @@ public class likesColoniaControlador {
         return likesColoniaServicio.guardarLikesColonia(likesColonia);
     }
 
-    @PutMapping("/update-likes-colonia")
+    @PutMapping("/update-likes-colonia/{id}")
     @ResponseStatus(HttpStatus.OK)
     public likesColonia actualizarLikesColonia(@RequestBody likesColonia likesColonia, @PathVariable Long id) {
         likesColonia liCol = likesColoniaServicio.obtenerLikesPorId(id);
