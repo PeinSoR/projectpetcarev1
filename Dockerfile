@@ -1,9 +1,10 @@
-FROM eclipse-temurin:17-jdk AS build
+# -------- BUILD STAGE --------
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copiar solo el pom para cachear dependencias
 COPY pom.xml .
-RUN mvn -q -e -DskipTests dependency:go-offline
+RUN mvn -q -DskipTests dependency:go-offline
 
 # Ahora sí copiar el código
 COPY src ./src
@@ -12,6 +13,7 @@ COPY src ./src
 RUN mvn -q -DskipTests package
 
 
+# -------- RUNTIME STAGE --------
 FROM eclipse-temurin:17-jre
 WORKDIR /app
 
