@@ -27,7 +27,7 @@ public class solicitudesAdopcionControlador {
 
 
     @GetMapping("/allsolicitudes-adopcion")
-    @ResponseStatus
+    @ResponseStatus(HttpStatus.OK)
     public List<solicitudesAdopcion> obtenerSolicitudesAdopcion() {
         return solicitudesAdopcionServicio.obtenerSolicitudesServicio();
     }
