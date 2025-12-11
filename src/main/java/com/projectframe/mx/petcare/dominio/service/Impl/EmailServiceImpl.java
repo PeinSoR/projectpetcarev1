@@ -37,6 +37,11 @@ public class EmailServiceImpl implements EmailService {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             sg.api(request);
+            Response response = sg.api(request);
+            System.out.println("STATUS = " + response.getStatusCode());
+            System.out.println("BODY = " + response.getBody());
+            System.out.println("HEADERS = " + response.getHeaders());
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -71,6 +76,11 @@ public class EmailServiceImpl implements EmailService {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             sg.api(request);
+            Response response = sg.api(request);
+            System.out.println("STATUS = " + response.getStatusCode());
+            System.out.println("BODY = " + response.getBody());
+            System.out.println("HEADERS = " + response.getHeaders());
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
