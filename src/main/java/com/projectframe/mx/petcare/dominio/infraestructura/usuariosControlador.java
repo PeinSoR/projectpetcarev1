@@ -38,7 +38,7 @@ public class usuariosControlador {
     public usuarios crearUsuario(@RequestBody usuarios usuario) {
         String to = usuario.getEmail();
         String texto = "Se ha registrado este correo electronico: " + to + " exitosamente en nuestra base de datos";
-        String subject = "Registro en Administracion Eventos";
+        String subject = "Registro en Petcare";
 
         emailService.sendEmail(to,subject,texto);
 
@@ -49,7 +49,6 @@ public class usuariosControlador {
     @ResponseStatus(HttpStatus.OK)
     public void eliminarUsuarios(@PathVariable Long id) {
         usuariosServicio.eliminarUsuario(id);
-        return;
     }
 
     @PutMapping("/update-user/{id}")
