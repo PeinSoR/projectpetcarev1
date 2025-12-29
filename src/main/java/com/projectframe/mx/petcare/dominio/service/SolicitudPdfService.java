@@ -29,7 +29,7 @@ public class SolicitudPdfService {
             document.add(new Paragraph("Estado: " + solicitud.getEstado(), bodyFont));
             document.add(new Paragraph("Mensaje: " + solicitud.getMensaje(), bodyFont));
             document.add(new Paragraph("Fecha de solicitud: " + solicitud.getFechaSolicitud(), bodyFont));
-            document.add(new Paragraph("Creado el: " + solicitud.getCreatedAt(), bodyFont));
+            //document.add(new Paragraph("Creado el: " + solicitud.getCreatedAt(), bodyFont));
 
             document.close();
 

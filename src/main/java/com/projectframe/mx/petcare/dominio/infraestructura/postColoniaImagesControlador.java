@@ -2,6 +2,7 @@ package com.projectframe.mx.petcare.dominio.infraestructura;
 
 import com.projectframe.mx.petcare.dominio.aplicacion.coloniasServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.postColoniaImagesServicio;
+import com.projectframe.mx.petcare.dominio.aplicacion.postsColoniaServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.usuariosServicio;
 import com.projectframe.mx.petcare.dominio.entidades.colonias;
 import com.projectframe.mx.petcare.dominio.entidades.postColoniaImages;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.projectframe.mx.petcare.dominio.entidades.postsColonia;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class postColoniaImagesControlador {
     @Autowired
     private usuariosServicio usuariosServicio;
     @Autowired
-    private coloniasServicio coloniasServicio;
+    private postsColoniaServicio postsColoniaServicio;
 
     @GetMapping("/allpost-colonia-images")
     @ResponseStatus(HttpStatus.OK)
@@ -43,7 +45,7 @@ public class postColoniaImagesControlador {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
         }
-        colonias col = coloniasServicio.obtenerColoniaPorId(postColoniaImages.getPostColoniaId());
+        postsColonia col = postsColoniaServicio.obtenerPostsPorId(postColoniaImages.getPostColoniaId());
         if (col == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La colonia no existe");
         }

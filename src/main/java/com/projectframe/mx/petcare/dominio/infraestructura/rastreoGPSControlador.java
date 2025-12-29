@@ -31,7 +31,7 @@ public class rastreoGPSControlador {
         return rastreoGPSServicio.guardarRastreoGPS(rastreoGPS);
     }
 
-    @PutMapping("/update-rastreo-gps")
+    @PutMapping("/update-rastreo-gps/{id}")
     @ResponseStatus(HttpStatus.OK)
     public rastreoGPS actualizarRastreoGPS(@RequestBody rastreoGPS rastreoGPS, @PathVariable Long id) {
         rastreoGPS rgps = rastreoGPSServicio.obtenerRastreoGPSPorId(id);

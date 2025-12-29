@@ -1,59 +1,88 @@
 package com.projectframe.mx.petcare.dominio.service.Impl;
 
 import com.projectframe.mx.petcare.dominio.service.EmailService;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Attachments;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-
-
-import org.springframework.core.io.Resource;
+import java.io.IOException;
+import java.util.Base64;
 
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    @Value("${SENDGRID_API_KEY}")
+    private String SENDGRID_API_KEY;
+
+    @Value("${SENDGRID_FROM}")
+    private String SENDGRID_FROM;
 
     @Override
-    public void sendEmail(String to, String subject, String content){
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper;
-        try{
-            helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setFrom(new InternetAddress("nonreply@petcare.com", "Petcare"));
-            helper.setSubject(subject);
-            helper.setText(content, true);
-            helper.setTo(to);
-            mailSender.send(message);
+    public void sendEmail(String to, String subject, String content) {
+        Email from = new Email(SENDGRID_FROM, "Petcare");
+        Email toEmail = new Email(to);
 
-        }catch (Exception e){
-            e.printStackTrace();
+        Content htmlContent = new Content("text/html", content);
+        Mail mail = new Mail(from, subject, toEmail, htmlContent);
+
+        SendGrid sg = new SendGrid(SENDGRID_API_KEY);
+        Request request = new Request();
+
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            sg.api(request);
+            Response response = sg.api(request);
+            System.out.println("STATUS = " + response.getStatusCode());
+            System.out.println("BODY = " + response.getBody());
+            System.out.println("HEADERS = " + response.getHeaders());
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void sendEmailWithAttachment(String to, String subject, String content, byte[] attachment, String filename) {
+
+        Email from = new Email(SENDGRID_FROM, "Petcare");
+        Email toEmail = new Email(to);
+
+        Content htmlContent = new Content("text/html", content);
+        Mail mail = new Mail(from, subject, toEmail, htmlContent);
+
+        if (attachment != null && filename != null) {
+            Attachments attachments = new Attachments();
+            attachments.setFilename(filename);
+            attachments.setType("application/octet-stream");
+            attachments.setDisposition("attachment");
+
+            String base64Attachment = Base64.getEncoder().encodeToString(attachment);
+            attachments.setContent(base64Attachment);
+
+            mail.addAttachments(attachments);
+        }
+
+        SendGrid sg = new SendGrid(SENDGRID_API_KEY);
+        Request request = new Request();
+
         try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            sg.api(request);
+            Response response = sg.api(request);
+            System.out.println("STATUS = " + response.getStatusCode());
+            System.out.println("BODY = " + response.getBody());
+            System.out.println("HEADERS = " + response.getHeaders());
 
-            helper.setFrom(new InternetAddress("nonreply@petcare.com", "Petcare"));
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, true);
-
-            helper.addAttachment(filename, () -> new java.io.ByteArrayInputStream(attachment));
-
-            mailSender.send(message);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
-
 }
