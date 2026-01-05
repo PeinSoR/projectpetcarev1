@@ -23,11 +23,11 @@ public class SolicitudPdfService {
 
             document.add(new Paragraph("Solicitud de Adopción", titleFont));
             document.add(new Paragraph(" "));
-            document.add(new Paragraph("ID Solicitud: " + solicitud.getId(), bodyFont));
-            document.add(new Paragraph("ID Adopción: " + solicitud.getAdopcionId(), bodyFont));
+            document.add(new Paragraph("Folio Solicitud: " + solicitud.getId(), bodyFont));
+            document.add(new Paragraph("Folio Adopción: " + solicitud.getAdopcionId(), bodyFont));
             // document.add(new Paragraph("ID Solicitante: " + solicitud.getSolicitanteId(), bodyFont));
-            document.add(new Paragraph("Estado: " + solicitud.getEstado(), bodyFont));
-            document.add(new Paragraph("Mensaje: " + solicitud.getMensaje(), bodyFont));
+            document.add(new Paragraph("Estado de adopción: " + solicitud.getEstado(), bodyFont));
+            document.add(new Paragraph("Mensaje del solicitante: " + solicitud.getMensaje(), bodyFont));
             document.add(new Paragraph("Fecha de solicitud: " + solicitud.getFechaSolicitud(), bodyFont));
             //document.add(new Paragraph("Creado el: " + solicitud.getCreatedAt(), bodyFont));
 
