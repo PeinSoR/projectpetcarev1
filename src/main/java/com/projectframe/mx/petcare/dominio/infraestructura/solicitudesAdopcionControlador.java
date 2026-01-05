@@ -1,7 +1,9 @@
 package com.projectframe.mx.petcare.dominio.infraestructura;
 
+import com.projectframe.mx.petcare.dominio.aplicacion.mascotasServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.solicitudesAdopcionServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.usuariosServicio;
+import com.projectframe.mx.petcare.dominio.entidades.mascotas;
 import com.projectframe.mx.petcare.dominio.entidades.solicitudesAdopcion;
 import com.projectframe.mx.petcare.dominio.entidades.usuarios;
 import com.projectframe.mx.petcare.dominio.service.EmailService;
@@ -20,6 +22,8 @@ public class solicitudesAdopcionControlador {
 
     @Autowired
     private usuariosServicio usuariosServicio;
+    @Autowired
+    private mascotasServicio mascotasServicio;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -42,6 +46,7 @@ public class solicitudesAdopcionControlador {
     @ResponseStatus(HttpStatus.OK)
     public solicitudesAdopcion guardarSolicitudAdopcion(@RequestBody solicitudesAdopcion solicitud) {
         solicitudesAdopcion nuevaSolicitud = solicitudesAdopcionServicio.guardarSolicitudesAdopcionServicio(solicitud);
+
         usuarios user = usuariosServicio.obtenerUsuarioPorId(solicitud.getSolicitanteId());
         String emailUsuario = user.getEmail();
 
@@ -59,6 +64,23 @@ public class solicitudesAdopcionControlador {
                 pdf,
                 "solicitud_adopcion_" + nuevaSolicitud.getId() + ".pdf"
         );
+        mascotas mascota = mascotasServicio.obtenerMascotasPorId(nuevaSolicitud.getId());
+        usuarios userduenio = usuariosServicio.obtenerUsuarioPorId(mascota.getUsuarioId());
+        String asuntoDuenio = "Quieren adoptar a " + mascota.getNombre() + " !!!";
+        String contenidoDuenio =
+                "Hola " + userduenio.getNombre() + " \n\n"
+                        + "Han enviado una solicitud para adoptar a tu mascota "
+                        + mascota.getNombre() + ".\n"
+                        + "Se adjunta el PDF con la información del solicitante.";
+
+        emailService.sendEmailWithAttachment(
+                userduenio.getEmail(),
+                asuntoDuenio,
+                contenidoDuenio,
+                pdf,
+                "solicitud_adopcion_" + nuevaSolicitud.getId() + ".pdf"
+        );
+
     return nuevaSolicitud;
     }
 
