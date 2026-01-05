@@ -11,6 +11,7 @@ import com.projectframe.mx.petcare.dominio.service.SolicitudPdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -65,6 +66,12 @@ public class solicitudesAdopcionControlador {
                 "solicitud_adopcion_" + nuevaSolicitud.getId() + ".pdf"
         );
         mascotas mascota = mascotasServicio.obtenerMascotasPorId(nuevaSolicitud.getId());
+        if (mascota == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Mascota no encontrada con id: " + solicitud.getId()
+            );
+        }
         usuarios userduenio = usuariosServicio.obtenerUsuarioPorId(mascota.getUsuarioId());
         String asuntoDuenio = "Quieren adoptar a " + mascota.getNombre() + " !!!";
         String contenidoDuenio =
