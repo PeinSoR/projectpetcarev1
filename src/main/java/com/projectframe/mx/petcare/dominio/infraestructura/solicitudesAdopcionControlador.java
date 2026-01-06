@@ -1,8 +1,10 @@
 package com.projectframe.mx.petcare.dominio.infraestructura;
 
+import com.projectframe.mx.petcare.dominio.aplicacion.adopcionesServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.mascotasServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.solicitudesAdopcionServicio;
 import com.projectframe.mx.petcare.dominio.aplicacion.usuariosServicio;
+import com.projectframe.mx.petcare.dominio.entidades.adopciones;
 import com.projectframe.mx.petcare.dominio.entidades.mascotas;
 import com.projectframe.mx.petcare.dominio.entidades.solicitudesAdopcion;
 import com.projectframe.mx.petcare.dominio.entidades.usuarios;
@@ -25,6 +27,8 @@ public class solicitudesAdopcionControlador {
     private usuariosServicio usuariosServicio;
     @Autowired
     private mascotasServicio mascotasServicio;
+    @Autowired
+    private adopcionesServicio adopcionesServicio;
     @Autowired
     private EmailService emailService;
     @Autowired
@@ -65,14 +69,18 @@ public class solicitudesAdopcionControlador {
                 pdf,
                 "solicitud_adopcion_" + nuevaSolicitud.getId() + ".pdf"
         );
-        mascotas mascota = mascotasServicio.obtenerMascotasPorId(nuevaSolicitud.getId());
+        adopciones adopcion = adopcionesServicio.obtenerAdopcionesPorId(solicitud.getId());
+        Long mascotaId = adopcion.getMascotaId();
+        mascotas mascota = mascotasServicio.obtenerMascotasPorId(mascotaId);
+
         if (mascota == null) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    "Mascota no encontrada con id: " + solicitud.getId()
+                    "Mascota no encontrada con id: " + mascotaId
             );
         }
         usuarios userduenio = usuariosServicio.obtenerUsuarioPorId(mascota.getUsuarioId());
+
         String asuntoDuenio = "Quieren adoptar a " + mascota.getNombre() + " !!!";
         String contenidoDuenio =
                 "Hola " + userduenio.getNombre() + " \n\n"
