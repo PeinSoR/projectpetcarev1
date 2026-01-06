@@ -43,10 +43,6 @@ public class commentsColoniaControlador {
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no existe");
         }
-        colonias col = coloniasServicio.obtenerColoniaPorId(commentColonia.getPostColoniaId());
-        if (col == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La colonia no existe");
-        }
         return commentsColoniaServicio.guardarCommentsColonia(commentColonia);
     }
 
