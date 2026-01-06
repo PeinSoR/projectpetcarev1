@@ -69,7 +69,7 @@ public class solicitudesAdopcionControlador {
                 pdf,
                 "solicitud_adopcion_" + nuevaSolicitud.getId() + ".pdf"
         );
-        adopciones adopcion = adopcionesServicio.obtenerAdopcionesPorId(solicitud.getId());
+        adopciones adopcion = adopcionesServicio.obtenerAdopcionesPorId(solicitud.getAdopcionId());
         Long mascotaId = adopcion.getMascotaId();
         mascotas mascota = mascotasServicio.obtenerMascotasPorId(mascotaId);
 
