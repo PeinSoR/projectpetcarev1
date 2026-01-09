@@ -11,8 +11,11 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        "https://petcare-qsvz.onrender.com",
-                        "https://69611b2e90ee1a4783d8ac8c--petcare-frontend.netlify.app"
+                        "https://petcare-qsvz.onrender.com", // Para entrega del proyecto
+                        "https://69611b2e90ee1a4783d8ac8c--petcare-frontend.netlify.app", // Para tarea
+                        "https://dashing-custard-78baac.netlify.app", // Para tarea
+                        "https://gorgeous-quokka-4c3398.netlify.app", // Para tarea
+                        "https://dazzling-biscochitos-fd0c40.netlify.app" // Para tarea
                 )
                 .allowedMethods(
                         "GET", "POST", "PUT", "DELETE", "OPTIONS"
