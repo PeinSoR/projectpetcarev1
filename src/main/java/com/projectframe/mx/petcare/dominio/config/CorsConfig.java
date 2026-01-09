@@ -12,8 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
                 .allowedOrigins(
                         "https://petcare-qsvz.onrender.com",
-                              "https://*.netlify.app"
-
+                        "https://69611b2e90ee1a4783d8ac8c--petcare-frontend.netlify.app"
                 )
                 .allowedMethods(
                         "GET", "POST", "PUT", "DELETE", "OPTIONS"
